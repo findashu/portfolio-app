@@ -5,8 +5,14 @@
     <title>{{ title }}</title>
 </head>
 <body>
-    {{> header }}
+    {{#if nav}}
+        {{> header }}
+    {{/if}}
+
     {{{body}}}
-    {{> footer}}
+
+    {{#if footer}}
+        {{> footer}}
+    {{/if}}
 </body>
 </html>

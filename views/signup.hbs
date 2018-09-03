@@ -1,0 +1,34 @@
+<form class="form-signin" action="/sign-up" method="POST">
+   
+    {{!-- <img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> --}}
+
+    {{#if messages}}
+        {{#each messages}}
+            <p style="color:red"> {{this}}</p>
+        {{/each}}
+    {{/if}}
+
+
+    <h1 class="h3 mb-3 font-weight-normal">Please sign Up</h1>
+
+    <label for="inputEmail" class="sr-only">Name</label>
+    <input type="text" id="name" name="name" class="form-control" placeholder="Name" required autofocus>
+
+    <label for="mobile" class="sr-only">Mobile</label>
+    <input type="text" id="mobile" name="mobile" class="form-control" placeholder="Contact number" required>
+
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" >
+
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password">
+
+
+    <div class="checkbox mb-3">
+        <label>
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+</form>

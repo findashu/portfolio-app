@@ -1,6 +1,29 @@
-<main role="main" class="container">
-    <h1 class="mt-5">Sticky footer with fixed navbar</h1>
-    <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and
-        CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>body &gt; .container</code>.</p>
-    <p>Back to <a href="../sticky-footer">the default sticky footer</a> minus the navbar.</p>
+<main role="main">
+    <div class="album py-5 bg-light">
+        <div class="container">
+            {{#if projects}}
+                <div class="row">
+                    {{#each projects}}
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <img class="card-img-top" src="{{this.imgSrc}}" alt="Card image cap">
+                            <div class="card-body">
+                                <h3>{{this.name}}</h3>
+                                <p class="card-text">{{this.description}}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href={{this.uName}} type="button" class="btn btn-sm btn-outline-secondary">Details</a>
+                                        <a type="button" href="{{this.gitHubLink}}" class="btn btn-sm btn-outline-secondary">Github</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            {{else}}
+            <p>No projects available</p>
+            {{/if}}
+        </div>
+    </div>
 </main>
