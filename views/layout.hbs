@@ -2,7 +2,12 @@
 <html lang="en">
 <head>
     {{> head }}
+
     <title>{{ title }}</title>
+
+    {{#each extraCss}}
+        <link rel="stylesheet" href="{{this}}">
+    {{/each}}
 </head>
 <body>
     {{#if nav}}
@@ -14,5 +19,6 @@
     {{#if footer}}
         {{> footer}}
     {{/if}}
+    {{> scripts }}
 </body>
 </html>

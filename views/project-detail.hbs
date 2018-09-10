@@ -1,0 +1,65 @@
+<main role="main">
+    <div class="album py-3 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 project-detail-sb">
+                    <div class="project-sidebar-block mb-4">
+                        <h2>Links</h2>
+                        <div class="project-sidebar-links">
+                            <a class="btn btn-primary" href="#">Live Demo</a>
+                        </div>
+                        <div class="project-sidebar-links">
+                            <a href="{{project.gitHubLink}}" class="btn btn-secondary">Github Link</a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="project-sidebar-block mb-4">
+                        <h2>Tags</h2>
+                        <div class="project-sidebar-links">
+                            <a class="badge badge-primary" href="#">Javascript</a>
+                            <a class="badge badge-danger" href="#">Random</a>
+                            <a class="badge badge-success" href="#">Math</a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="project-sidebar-block mb-4">
+                        <h2>Related Projects</h2>
+                        <div class="project-sidebar-links">
+                            <div class="project-sidebar-links">
+                                <a class="bc-item" href="#">Javascript</a>
+                            </div>
+                            <div class="project-sidebar-links">
+                                <a class="bc-item" href="#">Javascript</a>
+                            </div>
+                            <div class="project-sidebar-links">
+                                <a class="bc-item" href="#">Javascript</a>
+                            </div>
+                            <div class="project-sidebar-links">
+                                <a class="bc-item" href="#">Javascript</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-9">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item bc-item" >Home</li>
+                            <li class="breadcrumb-item bc-item">Projects</li>
+                            <li class="breadcrumb-item" aria-current="page">Current Page</li>
+                        </ol>
+                    </nav>
+                    <h1 class="display-3">{{ project.name }}</h1>
+                    <br>
+                    <p>{{project.description}}</p>
+                    <br>
+                    <img class="img-responsive" width="500" height="500" src="{{project.imgSrc}}" alt="">
+                    <br>
+                    <h2>Watch a Live Demo <a href="#">here</a></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>

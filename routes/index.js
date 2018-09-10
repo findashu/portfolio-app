@@ -6,7 +6,7 @@ let projects = [
         name:'First Project',
         description: 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.',
         imgSrc: '/image/ashu.JPG',
-        gitHubLink:'www.github.com',
+        gitHubLink:'http://www.github.com',
         uName:'first-project'
     },
     {
@@ -21,7 +21,7 @@ let projects = [
         name:'Third Project',
         description: 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.',
         imgSrc: '/image/ashu.JPG',
-        gitHubLink:'www.github.com',
+        gitHubLink:'http://www.github.com',
         uName:'third-project'
 
     }
@@ -29,11 +29,11 @@ let projects = [
 
 
 module.exports.index = (req,res) => {
-    console.log(req.session.name)
     res.render('index',{
         title:'HBS',
         layout: 'layout',
         nav : true,
+        navHome : true,
         footer : true,
         projects: projects
     })
@@ -44,6 +44,7 @@ module.exports.contact = (req,res) => {
         title: 'Contact Us',
         layout: 'layout',
         nav : true,
+        navContact : true,
         footer : true
     })
 }
@@ -53,6 +54,8 @@ module.exports.signup = (req,res) => {
         title:'Sign up',
         layout: 'layout',
         nav : false,
+       
+        extraCss: ['/css/signin.css'],
         footer : false
     })
 }
@@ -86,12 +89,12 @@ module.exports.doSignup = (req, res) => {
     }
 }
 
-
 module.exports.login = (req,res) => {
     res.render('login', {
         title:'Login',
         layout : 'layout',
         nav : false,
+        extraCss: ['/css/signin.css'],
         footer : false
     })
 }
@@ -101,6 +104,7 @@ module.exports.dashBoard = (req,res) => {
         title: 'Dashboard',
         layout: 'layout',
         nav : true,
+        navDashboard: true,
         footer: true,
     })
 }
@@ -134,5 +138,11 @@ module.exports.projectDetail = (req,res) => {
     
     console.log(project[0])
 
-    res.send('detail')
+    res.render('project-detail', {
+        title: 'Project Detail',
+        layout:'layout',
+        nav : true,
+        footer:true,
+        project: project[0]
+    })
 }
