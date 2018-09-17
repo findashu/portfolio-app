@@ -23,14 +23,16 @@ app.use(session({
     cookie: {maxAge : 30 * 24 * 60 * 1000}
 }));
 
-
+app.use(function(req, res, next) {
+    res.locals.session = req.session;
+    req.session.location = 'bangalore';
+    next();
+});
 
 
 app.use(validator());
-
 app.use(express.static(__dirname+'/static'));
 app.use(midleware.logger);
-
 
 function auth(req,res,next) {
     if(req.session && req.session.isAuthenticated) {
@@ -39,15 +41,18 @@ function auth(req,res,next) {
     res.redirect('/login')
 }
 
-
 app.get('/test', (req, res) => {
-    req.session.name = 'ashu'
-    res.send('Working with session')
+    if(req.session.id == 'hQAdpVJfar0TTjjsHZEA_hxKdHQBJQvA'){
+        res.send('Welcome again chotu')
+    }
+ res.send('Working with session')
 })
 
 app.get('/', routeHandler.index);
 
 app.get('/contact', routeHandler.contact)
+
+app.get('/projects', routeHandler.projectList)
 
 app.get('/sign-up', routeHandler.signup);
 
@@ -60,6 +65,8 @@ app.post('/login', routeHandler.doLogin);
 app.get('/dashboard', auth, routeHandler.dashBoard);
 
 app.get('/logout', routeHandler.logout);
+app.get('/blogs', routeHandler.blogList);
+
 
 app.get('/:uName',  routeHandler.projectDetail);
 

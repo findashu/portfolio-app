@@ -1,3 +1,5 @@
+const data = require('../seed-data')
+
 
 let users = [];
 
@@ -30,12 +32,20 @@ let projects = [
 
 module.exports.index = (req,res) => {
     res.render('index',{
-        title:'HBS',
+        title:'Ashutosh Mishra',
+        layout: 'layout-index'
+    })
+};
+
+module.exports.blogList = (req,res) => {
+    res.render('blogs',{
+        title:'Blogs',
         layout: 'layout',
         nav : true,
         navHome : true,
         footer : true,
-        projects: projects
+        blogs : data.myBlog,
+        blogCategories : data.blogCategories
     })
 };
 
@@ -52,9 +62,8 @@ module.exports.contact = (req,res) => {
 module.exports.signup = (req,res) => {
     res.render('signup', {
         title:'Sign up',
-        layout: 'layout',
+        layout: 'layout-signin',
         nav : false,
-       
         extraCss: ['/css/signin.css'],
         footer : false
     })
@@ -76,8 +85,9 @@ module.exports.doSignup = (req, res) => {
         errors.forEach((error) => messages.push(error.msg));
         res.render('signup', {
             title:'Sign up',
-            layout: 'layout',
+            layout: 'layout-signin',
             nav : false,
+            extraCss: ['/css/signin.css'],
             footer : false,
             messages : messages
         });
@@ -92,7 +102,7 @@ module.exports.doSignup = (req, res) => {
 module.exports.login = (req,res) => {
     res.render('login', {
         title:'Login',
-        layout : 'layout',
+        layout : 'layout-signin',
         nav : false,
         extraCss: ['/css/signin.css'],
         footer : false
@@ -130,6 +140,17 @@ module.exports.logout = (req,res) => {
     res.redirect('/')
 }
 
+
+module.exports.projectList = (req,res) => {
+    res.render('projects', {
+        title:'Projects',
+        layout: 'layout',
+        nav : true,
+        navProjects : true,
+        footer : true,
+        projects: projects
+    })
+}
 
 module.exports.projectDetail = (req,res) => {
     let uName = req.params.uName;
