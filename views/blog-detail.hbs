@@ -4,46 +4,29 @@
             <div class="row">
                 <div class="col-md-3 project-detail-sb">
                     <div class="project-sidebar-block mb-4">
-                        <h2>Links</h2>
-                        <div class="project-sidebar-links">
-                            <a class="btn btn-primary" href="#">Live Demo</a>
-                        </div>
-                        <div class="project-sidebar-links">
-                            <a href="{{project.gitHubLink}}" class="btn btn-secondary">Github Link</a>
-                        </div>
+                        <h2>Categories</h2>
+                        {{#each categories}}
+                            <div class="project-sidebar-links">
+                                <a class="bc-item" href="/blog?category={{this}}">{{this}}</a>
+                            </div>
+                        {{/each}}
                     </div>
                     <hr>
-                    <div class="project-sidebar-block mb-4">
-                        <h2>Tags</h2>
-                        <div class="project-sidebar-links">
-                            <a class="badge badge-primary" href="#">Javascript</a>
-                            <a class="badge badge-danger" href="#">Random</a>
-                            <a class="badge badge-success" href="#">Math</a>
-                        </div>
-                    </div>
                     <hr>
                     <div class="project-sidebar-block mb-4">
-                        <h2>Related Projects</h2>
+                        <h2>Archives</h2>
                         <div class="project-sidebar-links">
                             <div class="project-sidebar-links">
-                                <a class="bc-item" href="#">Javascript</a>
+                                <a class="bc-item" href="#">May 2018</a>
                             </div>
                             <div class="project-sidebar-links">
-                                <a class="bc-item" href="#">Javascript</a>
+                                <a class="bc-item" href="#">June 2018</a>
                             </div>
                             <div class="project-sidebar-links">
-                                <a class="bc-item" href="#">Javascript</a>
+                                <a class="bc-item" href="#">September 2018</a>
                             </div>
                             <div class="project-sidebar-links">
-                                <a class="bc-item" href="#">Javascript</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-sidebar-block">
-                        <h2>Resources</h2>
-                        <div class="project-sidebar-links">
-                            <div class="project-sidebar-links">
-                                <a href="/projects/" class="bc-item">JS Console</a>
+                                <a class="bc-item" href="#">Jan 2017</a>
                             </div>
                         </div>
                     </div>
@@ -55,12 +38,12 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item bc-item" >Home</li>
                             <li class="breadcrumb-item bc-item">Projects</li>
-                            <li class="breadcrumb-item" aria-current="page">{{project.name}}</li>
+                            <li class="breadcrumb-item" aria-current="page">{{blog.name}}</li>
                         </ol>
                     </nav>
-                    <h1 class="display-3">{{ project.name }}</h1>
+                    <h1 class="display-3">{{blog.name}}</h1>
                     <br>
-                    <p>{{project.description}}</p>
+                    <p>{{blog.description}}</p>
                     <br>
                     <div id="projectSlider" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">

@@ -1,75 +1,53 @@
+var express = require('express');
+const router = express.Router();
 const data = require('../seed-data')
 
 
-let users = [];
-
-let projects = [
-    {
-        name:'First Project',
-        description: 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.',
-        imgSrc: '/image/ashu.JPG',
-        gitHubLink:'http://www.github.com',
-        uName:'first-project'
-    },
-    {
-        name:'Second Project',
-        description: 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.',
-        imgSrc: '/image/ashu.JPG',
-        gitHubLink:'www.github.com',
-        uName:'second-project'
-
-    },
-    {
-        name:'Third Project',
-        description: 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.',
-        imgSrc: '/image/ashu.JPG',
-        gitHubLink:'http://www.github.com',
-        uName:'third-project'
-
-    }
-]
 
 
-module.exports.index = (req,res) => {
-    res.render('index',{
-        title:'Ashutosh Mishra',
+
+router.get('/', function (req, res) {
+    res.render('index', {
+        title: 'Ashutosh Mishra',
         layout: 'layout-index'
     })
-};
+});
 
-module.exports.blogList = (req,res) => {
-    res.render('blogs',{
-        title:'Blogs',
-        layout: 'layout',
-        nav : true,
-        navHome : true,
-        footer : true,
-        blogs : data.myBlog,
-        blogCategories : data.blogCategories
-    })
-};
-
-module.exports.contact = (req,res) => {
+router.get('/contact', (req, res) => {
     res.render('contact', {
         title: 'Contact Us',
         layout: 'layout',
-        nav : true,
-        navContact : true,
-        footer : true
+        nav: true,
+        navContact: true,
+        footer: true
     })
-}
+})
 
-module.exports.signup = (req,res) => {
+router.get('/about', (req, res) => {
+    res.render('about', {
+        title: 'About Me',
+        layout: 'layout',
+        nav: true,
+        navContact: true,
+        footer: true
+    })
+})
+
+router.get('/resume', (req, res) => {
+    res.redirect('/hurreh-tech-interview.pdf')
+})
+
+router.get('/sign-up', (req, res) => {
     res.render('signup', {
-        title:'Sign up',
+        title: 'Sign up',
         layout: 'layout-signin',
-        nav : false,
+        nav: false,
         extraCss: ['/css/signin.css'],
-        footer : false
+        footer: false
     })
-}
+})
 
-module.exports.doSignup = (req, res) => {
+router.post('/sign-up', (req, res) => {
 
     let email = req.body.email;
     let password = req.body.password;
@@ -80,90 +58,62 @@ module.exports.doSignup = (req, res) => {
     let errors = req.validationErrors();
     console.log(errors)
 
-    if(errors) {
+    if (errors) {
         let messages = [];
         errors.forEach((error) => messages.push(error.msg));
         res.render('signup', {
-            title:'Sign up',
+            title: 'Sign up',
             layout: 'layout-signin',
-            nav : false,
+            nav: false,
             extraCss: ['/css/signin.css'],
-            footer : false,
-            messages : messages
+            footer: false,
+            messages: messages
         });
-    }else {
+    } else {
         let data = req.body;
         users.push(data)
         console.log(users);
         res.redirect('/')
     }
-}
+})
 
-module.exports.login = (req,res) => {
+router.get('/login', (req, res) => {
     res.render('login', {
-        title:'Login',
-        layout : 'layout-signin',
-        nav : false,
+        title: 'Login',
+        layout: 'layout-signin',
+        nav: false,
         extraCss: ['/css/signin.css'],
-        footer : false
+        footer: false
     })
-}
+})
 
-module.exports.dashBoard = (req,res) => {
-    res.render('dashboard', {
-        title: 'Dashboard',
-        layout: 'layout',
-        nav : true,
-        navDashboard: true,
-        footer: true,
-    })
-}
+router.post('/login', (req, res) => {
 
-module.exports.doLogin = (req,res) => {
-    
     let email = req.body.email;
     let password = req.body.password;
 
-    var user = users.filter((user) => user.email == email && user.password == password)
+    if(data.user.email == email && data.user.password == password) {
 
-    if(user && user.length > 0){
-        req.session.isAuthenticated = true
-
-        res.redirect('/dashboard')
+        req.session.isAuthenticated = true;
+        req.session.user = data.user;
+        res.locals.user = data.user;
+        console.log('heyeheye')
+        res.redirect('/admin');
     }else {
-        res.send('Credentials not match')
+        res.render('login', {
+            title: 'Login',
+            layout: 'layout-signin',
+            nav: false,
+            extraCss: ['/css/signin.css'],
+            footer: false
+        })
     }
-}
-
-module.exports.logout = (req,res) => {
+});
+    
+router.get('/logout', (req, res) => {
     req.session.isAuthenticated = false;
+    delete req.session.user;
     res.redirect('/')
-}
+});
 
-
-module.exports.projectList = (req,res) => {
-    res.render('projects', {
-        title:'Projects',
-        layout: 'layout',
-        nav : true,
-        navProjects : true,
-        footer : true,
-        projects: projects
-    })
-}
-
-module.exports.projectDetail = (req,res) => {
-    let uName = req.params.uName;
-    
-    let project = projects.filter((pro) => pro.uName == uName)
-    
-    console.log(project[0])
-
-    res.render('project-detail', {
-        title: 'Project Detail',
-        layout:'layout',
-        nav : true,
-        footer:true,
-        project: project[0]
-    })
-}
+module.exports = router;
