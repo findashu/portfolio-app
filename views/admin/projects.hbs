@@ -3,8 +3,8 @@
         <h1 class="h2">Project</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
-                <a class="btn btn-sm btn-outline-secondary">Create New</a>
-                <a class="btn btn-sm btn-outline-secondary">Upload</a>
+                <a href="/admin/projects/create" class="btn btn-sm btn-outline-secondary">Create New</a>
+                <a href="/admin/media" class="btn btn-sm btn-outline-secondary">Upload</a>
             </div>
         </div>
     </div>
@@ -23,8 +23,8 @@
             <tbody>
                 {{#each projects}}
                 <tr>
-                    <td><a href="#"><img width="100" height="100" src="{{this.image}}" alt="" srcset=""></a></td>
-                    <td><a href=#>{{this.name}}</a></td>
+                    <td><a href="/admin/project/{{this.alias}}"><img width="100" height="100" src="{{this.image}}" alt="" srcset=""></a></td>
+                    <td><a href="/admin/project/{{this.alias}}">{{this.name}}</a></td>
                     <td>{{this.alias}}</td>
                     <td><a href="{{this.githubUrl}}">Repo</a></td>
                     <td>

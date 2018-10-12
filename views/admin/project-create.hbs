@@ -1,0 +1,45 @@
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Create New Project</h1>
+    </div>
+
+    <form action="/admin/projects/create" method="POST">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" class="form-control" placeholder="Project Name" autofocus required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Alias</label>
+                    <input type="text" name="alias" id="alias" class="form-control" placeholder="Project alias" autofocus required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Github Link</label>
+                    <input type="text" name="githubUrl" id="githubUrl" class="form-control" placeholder="Project githubUrl" autofocus required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Tags</label>
+                    <input type="text" name="tags" id="tags" class="form-control" placeholder="Project tags" autofocus required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Description</label>
+                    <input type="text" name="description" id="description" class="form-control" placeholder="Project description" autofocus required>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Save</button>
+    </form>
+</main>

@@ -1,0 +1,66 @@
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">{{project.name}}</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+                <a href="/admin/projects/create" class="btn btn-sm btn-outline-secondary">Create New</a>
+                <a href="/admin/project/{{project.alias}}/delete" class="btn btn-sm btn-outline-secondary">Delete</a>
+                <a href="/admin/project/{{project.alias}}/uploaddemo" class="btn btn-sm btn-outline-secondary">Upload Demo</a>
+            </div>
+        </div>
+    </div>
+
+   <form action="/admin/project/{{project.alias}}/update" method="POST">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" class="form-control" value="{{project.name}}" autofocus required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Alias</label>
+                    <input type="text" name="alias" id="alias" class="form-control" value="{{project.alias}}" autofocus required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Github Link</label>
+                    <input type="text" name="githubUrl" id="githubUrl" class="form-control" value="{{project.githubUrl}}" >
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Tags</label>
+                    <input type="text" name="tags" id="tags" class="form-control" placeholder="Project tags" value="{{#each project.tags}}{{this.name}}{{/each}}" >
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Description</label>
+                    <textarea type="text" name="description" id="description" class="form-control" rows="6" placeholder="Project description" value="{{project.description}}" > {{project.description}}</textarea>
+                </div>
+            </div>
+
+             <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Cover Image</label>
+                    {{#if project.image}}
+                        <img src="{{project.image}}" width="100%" height="250" alt="" srcset="">
+                        <a href="#">Change Cover Photo</a>
+                    {{else}}
+
+                    <a href="#" class="btn btn-sm btn-outline-secondry"><span>Upload Cover Photo</span></a>
+                    {{/if}}
+                  
+                </div>
+            </div>
+        </div>  
+        <button class="btn btn-primary" type="submit">Update</button>
+    </form>
+</main>
