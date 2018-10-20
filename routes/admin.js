@@ -6,6 +6,20 @@ const multer = require('multer');
 const path = require('path');
 const unzip = require('unzip');
 const mediaService = require('../services/mediaService');
+const MongoClient = require('mongodb').MongoClient;
+
+var url = 'mongodb://localhost:27017';
+
+var db;
+
+MongoClient.connect(url, { useNewUrlParser: true }, function(error, client) {
+    if(error){
+        console.log(error);
+    }else{
+        console.log('connected to db');
+        db = client.db('mean')
+    }
+})
 
 var storage = multer.diskStorage({
     destination: function(req,file,callback) {
@@ -15,7 +29,9 @@ var storage = multer.diskStorage({
         console.log(JSON.stringify(file));
         callback(null, file.originalname)
     }
-})
+});
+
+
 
 var upload = multer({storage: storage}).single('image');
 
@@ -38,11 +54,21 @@ router.get('/', function(req,res) {
 
 
 router.get('/projects', function(req,res) {
-    res.render('admin/projects', {
-        layout:"layout-dashboard",
-        title: 'Project Admin',
-        navProjects : true,
-        projects : getProject()
+
+    var projectCollection = db.collection('projects');
+
+    projectCollection.find({}).toArray(function(err, docs) {
+        console.log(docs);
+        if(docs && docs.length > 0){
+            res.render('admin/projects', {
+                layout:"layout-dashboard",
+                title: 'Project Admin',
+                navProjects : true,
+                projects : docs
+            })
+        }else {
+            console.log(err)
+        }
     })
 })
 
@@ -56,18 +82,25 @@ router.get('/projects/create', function(req,res) {
 
 router.post('/projects/create', function(req,res) {
     var inputData = req.body;
-    data.myProjects.push(inputData);
-    var index = Object.keys(data.projectIndex).length;
-    data.projectIndex[inputData.alias] = index;
+    // data.myProjects.push(inputData);
+    // var index = Object.keys(data.projectIndex).length;
+    // data.projectIndex[inputData.alias] = index;
     var jsonData = JSON.stringify(data);
 
-    fs.writeFile('my-data.json', jsonData, function(err) {
-        if(err){
-            return console.log(err);
-        }
-        console.log('Project Saved');
+    var projectCollection = db.collection('projects');    
+
+    projectCollection.insertOne(inputData, function(err, data) {
+        console.log('inserted ');
         res.redirect('/admin/projects');
     })
+
+    // fs.writeFile('my-data.json', jsonData, function(err) {
+    //     if(err){
+    //         return console.log(err);
+    //     }
+    //     console.log('Project Saved');
+    //     res.redirect('/admin/projects');
+    // })
 })
 
 

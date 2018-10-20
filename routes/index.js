@@ -97,7 +97,6 @@ router.post('/login', (req, res) => {
         req.session.isAuthenticated = true;
         req.session.user = data.user;
         res.locals.user = data.user;
-        console.log('heyeheye')
         res.redirect('/admin');
     }else {
         res.render('login', {

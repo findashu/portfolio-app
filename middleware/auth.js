@@ -1,5 +1,5 @@
 module.exports.authenticated = function(req,res,next) {
-    req.session.isAuthenticated = req.session.isAuthenticated? true : false;
+    req.session.isAuthenticated = req.session.isAuthenticated ? true : false;
     res.locals.isAuthenticated = req.session.isAuthenticated;
     if (req.session.isAuthenticated) {
         res.locals.user = req.session.user;
