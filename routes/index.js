@@ -1,10 +1,8 @@
 var express = require('express');
 const router = express.Router();
 const data = require('../seed-data')
-
-
-
-
+const User = require('../modal/userModal');
+const md5 = require('js-md5');
 
 router.get('/', function (req, res) {
     res.render('index', {
@@ -70,10 +68,24 @@ router.post('/sign-up', (req, res) => {
             messages: messages
         });
     } else {
-        let data = req.body;
-        users.push(data)
-        console.log(users);
-        res.redirect('/')
+    
+        let newUser = new User();
+
+        newUser.name = req.body.name;
+        newUser.password = md5(req.body.password);
+        newUser.email = req.body.email;
+        newUser.mobile = req.body.mobile;
+        newUser.createdOn = new Date();
+        newUser.updatedOn = new Date();
+        newUser.save(function(err, user) {
+            console.log(JSON.stringify(user))
+            if(err) {
+                console.log(err);
+                res.send(err)
+            }else{
+                res.redirect('/login')
+            }
+        })
     }
 })
 
@@ -90,23 +102,27 @@ router.get('/login', (req, res) => {
 router.post('/login', (req, res) => {
 
     let email = req.body.email;
-    let password = req.body.password;
+    let password = md5(req.body.password);
 
-    if(data.user.email == email && data.user.password == password) {
-
-        req.session.isAuthenticated = true;
-        req.session.user = data.user;
-        res.locals.user = data.user;
-        res.redirect('/admin');
-    }else {
-        res.render('login', {
-            title: 'Login',
-            layout: 'layout-signin',
-            nav: false,
-            extraCss: ['/css/signin.css'],
-            footer: false
-        })
-    }
+    User.find({email : email, password :password}).then(user => {
+        console.log(JSON.stringify(user))
+        if(user && user.length > 0) {
+            req.session.isAuthenticated = true;
+            req.session.user = user[0];
+            res.locals.user = user[0];
+            res.redirect('/admin');
+        }else {
+            res.render('login', {
+                title: 'Login',
+                layout: 'layout-signin',
+                nav: false,
+                extraCss: ['/css/signin.css'],
+                footer: false
+            })
+        }
+    }).catch(err => {
+        console.log(err);
+    })
 });
     
 router.get('/logout', (req, res) => {

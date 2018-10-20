@@ -8,8 +8,6 @@ module.exports.authenticated = function(req,res,next) {
 }
 
 module.exports.authenticate = function(req,res,next) {
-   
-    console.log('came for auth')
     if(req.session && req.session.isAuthenticated){
         next();
     }else{

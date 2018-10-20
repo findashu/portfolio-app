@@ -21,6 +21,7 @@ function mkdirByPathSync(targetDir, {isRelativeToScript = false} = {}) {
 
 module.exports.uploadMedia = function(req,res,dirPath, fileName, goBack) {
     mkdirByPathSync(dirPath);
+    
     var storage = multer.diskStorage({
         destination: function(req,file,callback) {
             callback(null, dirPath)

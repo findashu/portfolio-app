@@ -10,6 +10,19 @@ const blog = require('./routes/blog');
 const project = require('./routes/project');
 const admin = require('./routes/admin')
 const auth = require('./middleware/auth');
+const mongoose = require('mongoose');
+
+
+mongoose.connect('mongodb://localhost:27017/mean', { useNewUrlParser: true }, function(err) {
+    if(err) {
+        console.log(err)
+    }else{
+        console.log('Connected to db')
+    }
+});
+
+
+
 //set view engine
 app.set('views', __dirname+'/views');
 app.set('view engine', 'hbs');

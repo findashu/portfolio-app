@@ -22,7 +22,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="name">Alias</label>
-                    <input type="text" name="alias" id="alias" class="form-control" value="{{project.alias}}" autofocus required>
+                    <input type="text" name="alias" id="alias" class="form-control" value="{{project.alias}}"  readonly>
                 </div>
             </div>
 
@@ -40,6 +40,8 @@
                 </div>
             </div>
 
+
+
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="name">Description</label>
@@ -52,10 +54,10 @@
                     <label for="name">Cover Image</label>
                     {{#if project.image}}
                         <img src="{{project.image}}" width="100%" height="250" alt="" srcset="">
-                        <a href="#">Change Cover Photo</a>
+                        <a href="/admin/project/{{project.alias}}/upload-image">Change Cover Photo</a>
                     {{else}}
 
-                    <a href="#" class="btn btn-sm btn-outline-secondry"><span>Upload Cover Photo</span></a>
+                    <a href="/admin/project/{{project.alias}}/upload-image" class="btn btn-sm btn-outline-secondry"><span>Upload Cover Photo</span></a>
                     {{/if}}
                   
                 </div>
