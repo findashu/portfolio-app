@@ -15,6 +15,7 @@ var resetButton;
 guessField.focus();
 function checkGuess() {
     var userGuess = Number(guessField.value);
+    console.log(userGuess);
     if (guessCount === 1) {
         guesses.textContent = 'Previous guesses: ';
     }

@@ -51,6 +51,21 @@ router.get('/:alias', (req, res) => {
         }
     }
     projectService.getProjectByAlias(uName, projectDetail)
+});
+
+
+router.get('/:projectAlias/demo', (req,res) => {
+
+    function renderDemo(error, project) {
+        console.log(project);
+        res.render('demo', {
+            layout : 'layout-demo',
+            title : project.name,
+            project : project
+        });
+    };
+
+    projectService.getProjectByAlias(req.params.projectAlias, renderDemo)
 })
 
 module.exports = router;
