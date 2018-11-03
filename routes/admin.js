@@ -42,20 +42,21 @@ router.get('/', function (req, res) {
 
 
 router.get('/projects', function (req, res) {
-    function listProjects(err, data) {
-        if (!err) {
+    
+    projectService.getProjects(function(err, data) {
+        if(!err) {
+            console.log(data)
             res.render('admin/projects', {
                 layout: "layout-dashboard",
                 title: 'Project Admin',
                 navProjects: true,
                 projects: data
             })
-        } else {
+        }else {
             console.log(err);
-            res.send(err);
         }
-    };
-    projectService.getProjects(listProjects);
+    })
+        
 })
 
 router.get('/projects/create', function (req, res) {

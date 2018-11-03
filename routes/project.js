@@ -16,11 +16,10 @@ function getProject(alias) {
 
 
 router.get('/', (req, res) => {
-    if(req.query && req.query.tag) {
-        tag = req.query.tag
-    }
-    function listProjects(err,data) {
-        if(!err){
+    
+    projectService.getProjects(function(err, data) {
+        if(!err) {
+            console.log(data)
             res.render('projects', {
                 title: 'Projects',
                 layout: 'layout',
@@ -30,11 +29,11 @@ router.get('/', (req, res) => {
                 projects: data
             })
         }else {
-            res.send('Something went wrong')
-        } 
-    }
+            console.log(err);
+        }
+    })
 
-    projectService.getProjects(listProjects)
+    
 })
 
 router.get('/:alias', (req, res) => {

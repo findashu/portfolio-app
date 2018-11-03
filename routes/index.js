@@ -1,8 +1,9 @@
 var express = require('express');
 const router = express.Router();
 const data = require('../seed-data')
-const User = require('../modal/userModal');
 const md5 = require('js-md5');
+const Client = require('node-rest-client').Client;
+const client = new Client();
 
 router.get('/', function (req, res) {
     res.render('index', {
@@ -20,7 +21,6 @@ router.get('/contact', (req, res) => {
         footer: true
     })
 })
-
 
 
 router.get('/about', (req, res) => {
@@ -70,22 +70,28 @@ router.post('/sign-up', (req, res) => {
             messages: messages
         });
     } else {
-    
-        let newUser = new User();
+        var args = {
+            headers: {
+                "Content-Type": "application/json",
+                "Accepts": 'application/json'
+            },
+            data: req.body
+        }
 
-        newUser.name = req.body.name;
-        newUser.password = md5(req.body.password);
-        newUser.email = req.body.email;
-        newUser.mobile = req.body.mobile;
-        newUser.createdOn = new Date();
-        newUser.updatedOn = new Date();
-        newUser.save(function(err, user) {
-            console.log(JSON.stringify(user))
-            if(err) {
-                console.log(err);
-                res.send(err)
-            }else{
+        client.post('http://localhost:3003/signup', args, function (data, response) {
+
+            if (data && data.err == undefined) {
                 res.redirect('/login')
+            } else {
+                console.log(data.error);
+                res.render('signup', {
+                    title: 'Sign up',
+                    layout: 'layout-signin',
+                    nav: false,
+                    extraCss: ['/css/signin.css'],
+                    footer: false,
+                    messages: [data.message]
+                });
             }
         })
     }
@@ -103,15 +109,19 @@ router.get('/login', (req, res) => {
 
 router.post('/login', (req, res) => {
 
-    let email = req.body.email;
-    let password = md5(req.body.password);
+    var args = {
+        headers: {
+            "Content-Type": "application/json",
+            "Accepts": 'application/json'
+        },
+        data: req.body
+    }
 
-    User.find({email : email, password :password}).then(user => {
-        console.log(JSON.stringify(user))
-        if(user && user.length > 0) {
+    client.post('http://localhost:3003/login', args, function(data,response)  {
+        if(data.data) {
             req.session.isAuthenticated = true;
-            req.session.user = user[0];
-            res.locals.user = user[0];
+            req.session.user = data.data;
+            res.locals.user = data.data;
             res.redirect('/admin');
         }else {
             res.render('login', {
@@ -122,11 +132,9 @@ router.post('/login', (req, res) => {
                 footer: false
             })
         }
-    }).catch(err => {
-        console.log(err);
     })
 });
-    
+
 router.get('/logout', (req, res) => {
     req.session.isAuthenticated = false;
     delete req.session.user;

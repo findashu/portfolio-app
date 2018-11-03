@@ -10,17 +10,6 @@ const blog = require('./routes/blog');
 const project = require('./routes/project');
 const admin = require('./routes/admin')
 const auth = require('./middleware/auth');
-const mongoose = require('mongoose');
-
-
-mongoose.connect('mongodb://localhost:27017/mean', { useNewUrlParser: true }, function(err) {
-    if(err) {
-        console.log(err)
-    }else{
-        console.log('Connected to db')
-    }
-});
-
 
 
 //set view engine
@@ -49,6 +38,7 @@ app.use('/', index);
 app.use('/project', project)
 app.use('/blog', blog);
 app.use('/admin', auth.authenticate, admin)
+
 
 
 app.listen(3000, () => console.log('Server up and running on port 3000'))
