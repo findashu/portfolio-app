@@ -120,6 +120,9 @@ router.get('/project/:projectAlias', (req, res) => {
 router.post('/project/:projectAlias/update', (req, res) => {
     let alias = req.params.projectAlias;
     let data = req.body;
+    let tags = data.tags.split(',');
+    console.log(tags);
+    console.log(data)
     let updatePro = function (err, data) {
         if (!err) {
             res.redirect('/admin/project/' +alias)

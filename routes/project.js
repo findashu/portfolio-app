@@ -16,6 +16,9 @@ function getProject(alias) {
 
 
 router.get('/', (req, res) => {
+    if(req.query && req.query.tag) {
+        tag = req.query.tag
+    }
     function listProjects(err,data) {
         if(!err){
             res.render('projects', {
